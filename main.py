@@ -8,7 +8,7 @@ from functions import (
 
 
 def show_menu() -> None:
-    print("\n=== NSW Weather App ===")
+    print("\n<-> NSW Weather App <->")
     print("1. List NSW cities")
     print("2. Get weather for a city")
     print("3. Exit")
