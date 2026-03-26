@@ -1,46 +1,58 @@
 import requests
 
-class WeatherAppError(Exception):
 
+class WeatherAppError(Exception):
     pass
 
+
 def get_nsw_cities():
-    """Return a list of sample NSW city names."""
     return [
         "Sydney",
         "Newcastle",
         "Wollongong",
-        "Dubbo",
-        "Tamworth",
+        "Central Coast",
+        "Maitland",
         "Coffs Harbour",
+        "Wagga Wagga",
         "Albury",
+        "Tamworth",
         "Orange",
-        "Bathurst",
-        "Lismore",
-        "Nowra",
-        "Broken Hill",
-        "Armidale",
     ]
 
 
 def get_city_coordinates(city):
     url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1"
-    res = requests.get(url).json()
+    response = requests.get(url)
 
-    if "results" not in res:
-        raise WeatherAppError('City not found')
+    if response.status_code != 200:
+        raise WeatherAppError("Failed to connect to geocoding service.")
 
-    result = res["results"][0]
+    data = response.json()
+
+    if "results" not in data or not data["results"]:
+        raise WeatherAppError("City not found.")
+
+    result = data["results"][0]
     return {
-    "name": result["name"],
-    "latitude": result["latitude"],
-    "longitude": result["longitude"],}
+        "name": result["name"],
+        "latitude": result["latitude"],
+        "longitude": result["longitude"],
+    }
+
 
 def get_weather(lat, lon):
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
-    res = requests.get(url).json()
+    response = requests.get(url)
 
-    return res["current_weather"]
+    if response.status_code != 200:
+        raise WeatherAppError("Failed to connect to weather service.")
+
+    data = response.json()
+
+    if "current_weather" not in data:
+        raise WeatherAppError("Weather data not available.")
+
+    return data["current_weather"]
 
 
 def format_weather_output(location, weather):
