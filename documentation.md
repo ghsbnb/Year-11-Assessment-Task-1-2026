@@ -1,6 +1,6 @@
 ## Requirements Definition
 
-# This particular NSW weather app must have the ability to lidt the available cities, pull their geographical data, pull their weather data and display that information to the user clearly and efficiently.
+# This particular NSW weather app must have the ability to list the available cities, pull their geographical data, pull their weather data and display that information to the user clearly and efficiently.
 
 ## Functional specifications
 
