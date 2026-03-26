@@ -33,9 +33,6 @@ Options:
 3>Exits and prints "Goodbye!".
 
 # Pseudocode
-
-got u:
-
 import weatherapperror formatweatheroutput getcitycoordinates getnswcities getweather from functions
 start showmenu
 display nsw weather app
